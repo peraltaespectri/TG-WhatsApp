@@ -14,7 +14,7 @@ A solution for the same would be using a bridge between both the apps. Yes, I kn
 
 ### Deploy :
 
-[![Deploy with Heroku](https://www.herokucdn.com/deploy/button.svg "Deploy with Heroku")](https://telegram.dog/XTZ_HerokuBot?start=c3ViaW5wcy9URy1XaGF0c0FwcCBtYWlu "Deploy with Heroku")<br>
+[![Deploy with Heroku](https://www.herokucdn.com/deploy/button.svg "Deploy with Heroku")](https://heroku.com/deploy?template=https://github.com/peraltaespectri/TG-WhatsApp "Deploy with Heroku")<br>
 
 ### Config Variables
 

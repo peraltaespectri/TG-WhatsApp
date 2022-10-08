@@ -1,6 +1,7 @@
 {
   "name": "TG-WhatsApp",
   "description": "Ponte em tempo real entre WhatsApp -Telegram.",
+  "logo": "https://cdn.siasat.com/wp-content/uploads/2021/01/WhatsApp-Telegram-780x470.jpg",
   "repository": "https://github.com/subinps/TG-WhatsApp",
   "keywords": ["telegram", "whatsapp-bot", "whatsapp"],
   "stack": "container",

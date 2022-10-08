@@ -70,7 +70,7 @@ const getMediaInfo = (msg) => {
 
   mediaObj = msg[mediaType];
   if (Array.isArray(mediaObj)) {
-    mediaObj = mediaObj[mediaObj.length - 1]; // choosing highest quality among an array
+    mediaObj = mediaObj[mediaObj.length - 1]; // Escolhendo a qualidade mais alta entre uma matriz
   }
   const [type, mimeType, SAD, fileName, fileId, fileSize, caption, SAV, SAG] = [
     mediaType,
@@ -80,8 +80,8 @@ const getMediaInfo = (msg) => {
     mediaObj.file_id,
     mediaObj.file_size,
     msg.caption
-      ? `${getChatTitle(msg)} [${parseLink(msg)}] \n\n${msg.caption}`
-      : `${getChatTitle(msg)} [${parseLink(msg)}]`,
+      ? `${msg.caption}`
+      : ``,
     mediaType == "voice",
     mediaType == "animation",
   ];
@@ -182,17 +182,17 @@ const handleTgBot = async (ctx, client, MessageMedia) => {
         const mediaInfo = getMediaInfo(msg);
         if (mediaInfo.fileSize > config.tgDownloadMax) {
           console.log(
-            `File size ${mediaInfo.fileSize} exceeds max download size`
+            `Tamanho do arquivo ${mediaInfo.fileSize} excede o tamanho máximo de download`
           );
           waMsg = await client.sendMessage(
             chatId,
-            `ERROR: File Size Exceeds maximum upload size\n\n${mediaInfo.caption}`,
+            ``,
             {
               quotedMessageId: msgId,
             }
           );
           ctx.reply(
-            "<b>ERROR</b>\nFile was not delivered properly, since the file size exceeds maximum file size allowed by API.",
+            "<b>ERRO</b>\nO arquivo não foi entregue corretamente, pois o tamanho do arquivo excede o tamanho máximo permitido pela API.",
             {
               reply_to_message_id: ctx.message.message_id,
               allow_sending_without_reply: true,
@@ -228,8 +228,8 @@ const handleTgBot = async (ctx, client, MessageMedia) => {
           quotedMessageId: msgId,
           sendMediaAsDocument: mediaInfo.SAD,
           sendAudioAsVoice: mediaInfo.SAV,
-          stickerAuthor: "useTelegram",
-          stickerName: "telegramStickers",
+          stickerAuthor: "@peraltawk|@diegobatistawk",
+          stickerName: "Me Siga no Insta",
           caption: mediaInfo.caption,
           sendMediaAsSticker: mediaInfo.SAS,
           sendVideoAsGif: mediaInfo.SAG,
@@ -239,9 +239,7 @@ const handleTgBot = async (ctx, client, MessageMedia) => {
           ? msg.text.split(chatId.split("@")[0])[1].trim()
           : msg.text;
 
-        const message = `${getChatTitle(msg)} [${parseLink(
-          msg
-        )}]\n\n${message_}`;
+        const message = `${message_}`;
 
         waMsg = await client.sendMessage(chatId, message, {
           quotedMessageId: msgId,
@@ -264,7 +262,7 @@ const handleTgBot = async (ctx, client, MessageMedia) => {
         if (ctx.message.text && ctx.message.text.startsWith("/send")) {
           const chatId = ctx.message.text.split(" ")[1].trim() + "@c.us";
           await sendMsgToWa(ctx.message.reply_to_message, chatId);
-          tgResponse("Message sent successfully.");
+          tgResponse("Mensagem Enviada Com Sucesso.");
           return;
         } else {
           if (ctx.message.reply_to_message) {
@@ -284,24 +282,24 @@ const handleTgBot = async (ctx, client, MessageMedia) => {
             let url;
             url = url_string();
             if (!url) {
-              console.log("no entity found from replied message!");
-              ctx.reply("reply to a valid message!");
+              console.log("Nenhuma Identidade encontrada na Mensagem Respondida!");
+              ctx.reply("Responda a Uma Mensagem Válida!");
               return;
             }
             url = new URL(url);
             waChatId = url.searchParams.get("chat_id");
             if (!waChatId) {
-              console.log("no entity found from replied message!");
-              ctx.reply("reply to a valid message!");
+              console.log("Nenhuma Identidade encontrada na Mensagem Respondida!");
+              ctx.reply("Responda a Uma Mensagem Válida!");
               return;
             }
           } else {
-            ctx.reply("reply to a valid message!");
+            ctx.reply("Responda a Uma Mensagem Válida!");
             return;
           }
         }
       } else {
-        console.log(`no connected chat for ${ctx.message.chat.id}`);
+        console.log(`Nenhum Bate-Papo Conectado Com ${ctx.message.chat.id}`);
         return;
       }
     }

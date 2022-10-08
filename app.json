@@ -1,32 +1,32 @@
 {
   "name": "TG-WhatsApp",
-  "description": "Realtime bridge between WhatsApp -Telegram.",
+  "description": "Ponte em tempo real entre WhatsApp -Telegram.",
   "repository": "https://github.com/subinps/TG-WhatsApp",
   "keywords": ["telegram", "whatsapp-bot", "whatsapp"],
   "stack": "container",
   "env": {
     "SESSION_KEY": {
-      "description": "Session encryption password",
+      "description": "Senha de criptografia de sessão",
       "value": ""
     },
     "SESSION_URL": {
-      "description": "session.secure public url (It is safe because it is encrypted, But still if you want maybe you can create some sort of authorization stuff)",
+      "description": "session.secure url público (é seguro porque é criptografado, mas ainda assim, se você quiser, talvez possa criar algum tipo de autorização)(recomendo usar o dropbox)",
       "value": ""
     },
     "PM_REPLY": {
-      "description": " Make it false if you don't want bot to send an automated message when someone DM for first time.",
-      "value": "true"
+      "description": "Torne-o falso se você não quiser que o bot envie uma mensagem automática quando alguém eviar uma mensagem na DM pela primeira vez.(Usar true ou false )",
+      "value": "false"
     },
     "MONGODB_URL": {
-      "description": "MongoDB URL, Get it for free from cloud.mongodb.com",
+      "description": "URL do MongoDB, obtenha-o gratuitamente em cloud.mongodb.com",
       "value": ""
     },
     "BOT_TOKEN": {
-      "description": "telegram bot token from @Botfather",
-      "value": "true"
+      "description": "Token de bot do telegram de @Botfather",
+      "value": ""
     },
     "OWNER_ID": {
-      "description": "your telegram ID",
+      "description": "Seu ID de telegram",
       "value": ""
     }
   }

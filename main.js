@@ -216,12 +216,12 @@ bot.command("disconnect", async (ctx) => {
 
 bot.start((ctx) =>
   ctx.replyWithMarkdownV2(
-    `Hey **${ctx.message.from.first_name}**, Seja Bem-vindo!\n\nDistribuído por [TG\\-WhatsApp](https://github.com/subinps/TG-WhatsApp)\\.`,
+    `Hey **${ctx.message.from.first_name}**, Welcome\\!\n\nPowered by [TG\\-WhatsApp](https://github.com/subinps/TG-WhatsApp)\\.`,
     {
       disable_web_page_preview: true,
       reply_markup: {
         inline_keyboard: [
-          [{ text: "Repositório", url: "https://github.com/subinps/TG-WhatsApp" }],
+          [{ text: "Repo", url: "https://github.com/subinps/TG-WhatsApp" }],
         ],
       },
     }

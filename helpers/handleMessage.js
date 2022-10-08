@@ -91,11 +91,11 @@ const handleMessage = async (message, tgbot, client) => {
       client
     ))
   ) {
-    console.log(`ignoring PM ${chatId}`);
+    console.log(`Ignorando PM ${chatId}`);
     return;
   }
   if (!tgChatID && chat.isGroup) {
-    console.log(`no tg chat ID for ${chatId}`);
+    console.log(`Sem ID de bate-papo TG para ${chatId}`);
     return;
   }
   if (!chat.isGroup) {
@@ -116,22 +116,22 @@ const handleMessage = async (message, tgbot, client) => {
 
   const tgMessage = `${
     chat.isGroup
-      ? `${chatName} | <a href="https://wa.me/${contactNumber}?chat_id=${chatId}">${name}</a>`
+      ? `<a href="https://wa.me/${contactNumber}?chat_id=${chatId}">${name}</a>`
       : `<a href="https://wa.me/${contactNumber}?chat_id=${chatId}"><b>${chatName}</b></a> ${
           message?.isStatus ? "Added new status" : ""
         }`
-  }. \n${message.body ? `\n${message.body}` : ""}`;
+  }\n${message.body ? `\n${message.body}` : ""}`;
 
   if (message.hasMedia) {
     try {
       if (message._data?.size) {
         if (message._data.size > config.tgUploadMax) {
           console.log(
-            `Skipping message since file Size [${message._data.size}] is higer than tg limit!`
+            `Ignorando mensagem, O tamanho do arquivo [${message._data.size}] é maior que o limite do Telegram!`
           );
           const msg = await tgbot.telegram.sendMessage(
             tgChatID,
-            `<b>ERROR</b>\n<i>File Size Exceeded the maximum upload limit! Message was skipped.</i>\n\n${tgMessage}`,
+            `<b>ERRO</b>\n<i>Tamanho do arquivo Excedeu o limite máximo de upload! A mensagem foi ignorada.</i>\n\n${tgMessage}`,
             {
               parse_mode: "HTML",
               disable_web_page_preview: true,
@@ -141,9 +141,6 @@ const handleMessage = async (message, tgbot, client) => {
           );
           replyIDSWhatsAPP.set(msgId.toString(), msg.message_id);
           replyIDSTG.set(`${msg.chat.id}:${msg.message_id}`, msgId.toString());
-          await message.reply(
-            "ERROR\n\nThis message was not delivered to telegram group since the file size exceeds maximum size allowed by API!"
-          );
           return;
         }
       }
@@ -162,9 +159,9 @@ const handleMessage = async (message, tgbot, client) => {
 
         if (message.type == "sticker") {
           const chatName_ = chat.isGroup
-            ? `${chatName} | ${name}`
+            ? `${name}`
             : `${chatName}`;
-          // using a workaround for sticker captions
+          // Usando uma solução alternativa para legendas de adesivos
           messageData["options"]["reply_markup"] = {
             inline_keyboard: [
               [

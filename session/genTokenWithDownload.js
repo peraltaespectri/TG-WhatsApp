@@ -19,31 +19,31 @@ const rl = readline.createInterface({
 });
 
 rl.question(
-  "Enter password to encrypt session (You need to put this in ENV): ",
+  "Digite a senha para criptografar a sessão (Você precisa colocar isso em ENV - SESSION_KEY): ",
   (answer) => {
     password = answer;
-    console.log("Password set to:", password);
-    console.log("Generating QR Code...");
+    console.log("Senha definida como:", password);
+    console.log("Gerando QR Code...");
     rl.close();
     client.initialize();
   }
 );
 
 client.on("qr", (qr) => {
-  console.log(`Scan this QR Code and copy the JSON\n`);
+  console.log(`Digitalize este QR Code e copie o JSON\n`);
   qrcode.generate(qr, { small: true });
 });
 
 client.on("ready", () => {
   client.destroy();
-  console.log("Please wait...");
+  console.log("Por favor, Espere...");
   // wait because filesystem is busy
   setTimeout(async () => {
-    console.log("Session has been created");
+    console.log("A Sessão foi criada com Sucesso");
     await write(password);
     app.listen(8080, () => {
       console.log(
-        "Go to http://{app_url}/session.secure to download the session"
+        "Vamos para http://{app_url}/session.secure para baixar a sessão"
       );
     });
   }, 3000);

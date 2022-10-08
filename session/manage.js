@@ -26,7 +26,7 @@ module.exports = {
       // delete dir if exists
       if (fs.existsSync(`${__dirname}/../.wwebjs_auth`)) {
         fs.rmSync(`${__dirname}/../.wwebjs_auth`, { recursive: true });
-        console.log("Session directory cleaned");
+        console.log("Diretório De Sessão Foi limpo");
       }
     } catch (_) {}
   },
@@ -64,10 +64,10 @@ module.exports = {
 
       let unzip = new AdmZip(fs.readFileSync(`${__dirname}/temp.zip`));
       unzip.extractAllToAsync(base, true);
-      console.log("Session files replicated");
+      console.log("Arquivos De Sessão Replicados");
     } catch (error) {
       throw new Error(
-        `Session file not found, corrupted or password not matched. ${error.toString()}`
+        `Arquivo de sessão não encontrado, corrompido, a senha não foi encontrada ou ela está errada. ${error.toString()}`
       );
     } finally {
       try {
@@ -84,13 +84,13 @@ module.exports = {
         fs.writeFileSync(`${__dirname}/../session.secure`, response.data, {
           encoding: "binary",
         });
-        console.log("Session file fetched from", process.env.SESSION_URL);
+        console.log("Arquivo de Sessão Obtido de", process.env.SESSION_URL);
       } else {
-        console.log("Using local session");
+        console.log("Usando Sessão Local");
       }
     } catch (error) {
       throw new Error(
-        `Session fetching failed. If you are using Local machine or VPS please remove 'SESSION_URL' from Environment Variable. ${error.toString()}`
+        `Falha na busca da sessão. Se você estiver usando máquina local ou VPS, remova 'SESSION_URL' da Variável de Ambiente. ${error.toString()}`
       );
     }
   },

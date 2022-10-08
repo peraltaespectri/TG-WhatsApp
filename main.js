@@ -16,18 +16,18 @@ const client = new Client({
 
 client.on("auth_failure", () => {
   console.error(
-    "There is a problem in authentication, Kindly set the env var again and restart the app"
+    "Há um problema na autenticação, por favor, defina o env var novamente e reinicie o aplicativo"
   );
   client.tgbot.telegram.sendMessage(
     config.ownerID,
-    "#ERROR\nThere is a problem in authentication, Kindly set the env var again and restart the app"
+    "#ERRO\nHá um problema na autenticação, por favor, defina o env var novamente e reinicie o aplicativo"
   );
 });
 
 client.on("ready", () => {
-  console.log("WhatsApp Bot started !");
+  console.log("WhatsApp Bot Foi iniciado!");
   bot.launch();
-  console.log("Telegram Bot started!");
+  console.log("Telegram Bot Foi iniciado!");
 });
 
 client.on("message", async (msg) => {
@@ -42,7 +42,7 @@ client.on("message", async (msg) => {
           whatsAppID: whatsAppChat.id._serialized.toString(),
         });
         if (data) {
-          return await msg.reply(`Already connected to a chat! ${data.tgID}.`);
+          return await msg.reply(`Já conectado a um Bate-Papo! ${data.tgID}.`);
         }
       } catch (error) {
         console.log(error);
@@ -52,14 +52,14 @@ client.on("message", async (msg) => {
         }
       }
       const keyboard = Markup.inlineKeyboard([
-        Markup.button.callback("Connect", whatsAppChat.id._serialized),
+        Markup.button.callback("Conectar", whatsAppChat.id._serialized),
       ]);
       await msg.reply(
-        "connection request send to telegram. waiting for approval!"
+        "A Solicitação de conexão foi enviada. Esperando Aprovação!"
       );
       client.tgbot.telegram.sendMessage(
         chatID,
-        `${msg.author} requested to connect this chat with ${whatsAppChat.name}`,
+        `${msg.author} \nQuer conectar este Grupo Com o Grupo do Whatsapp \n${whatsAppChat.name}`,
         keyboard
       );
     }
@@ -70,7 +70,7 @@ client.on("message", async (msg) => {
 
 client.on("message_revoke_everyone", async (after, before) => {
   if (before) {
-    // TODO handle deleted messages on telegram
+    // TODO handle deleted messages on telegram | TODO lida com mensagens apagadas no telegrama
     // console.log("Deleted message");
   }
 });
@@ -79,15 +79,15 @@ client.on("disconnected", (reason) => {
   console.log("Client was logged out", reason);
   client.tgbot.telegram.sendMessage(
     config.ownerID,
-    `WhatsApp client was logged out.\nReason ${reason}`
+    `O cliente WhatsApp foi desconectado.\nReason ${reason}`
   );
 });
 
 client.on("qr", (qr) => {
-  console.log(`Session expired, please generate new session file!\n`);
+  console.log(`A sessão expirou. Gere um novo arquivo de sessão!\n`);
   client.tgbot.telegram.sendMessage(
     config.ownerID,
-    "Session Expired / Not found, please login and setup session again!"
+    "Sessão expirada / não encontrada, faça login e configure a sessão novamente!"
   );
   clean();
   process.exit();
@@ -98,7 +98,7 @@ client.on("qr", (qr) => {
 bot.command("connect", (ctx) => {
   if (["group", "supergroup"].includes(ctx.chat.type)) {
     ctx.reply(
-      `Send <code>!connect ${ctx.chat.id}</code> in your WhatsApp group.`,
+      `Envie \n<code>!connect ${ctx.chat.id}</code> \nem seu grupo do WhatsApp.`,
       { parse_mode: "HTML" }
     );
   }
@@ -134,15 +134,15 @@ bot.on("callback_query", async (ctx) => {
       if (value == "true") {
         await client.sendMessage(
           waChatID,
-          `this chat is connected now with telegram!`
+          `Agora este chat está conectado agora com o telegram!`
         );
-        ctx.answerCbQuery("Successfully Connected!", {
+        ctx.answerCbQuery("Conectado com sucesso!", {
           show_alert: true,
         });
-        ctx.editMessageText("successfully connected!");
+        ctx.editMessageText("Conectado com sucesso!");
       } else {
-        ctx.answerCbQuery("connection cancelled!", { show_alert: true });
-        await ctx.editMessageText("Connection refused successfully!");
+        ctx.answerCbQuery("Conexão Cancelada!", { show_alert: true });
+        await ctx.editMessageText("A Conexão Recusada Com Sucesso!");
       }
       return;
     }
@@ -150,7 +150,7 @@ bot.on("callback_query", async (ctx) => {
     chatTitle = ctx.callbackQuery.message.chat.title;
     waChatID = queryData;
 
-    ctx.answerCbQuery("Successfully Connected!", { show_alert: true });
+    ctx.answerCbQuery("Conectado com sucesso!", { show_alert: true });
     try {
       var { conn, coll } = await database("connections");
       await coll.updateOne(
@@ -160,7 +160,7 @@ bot.on("callback_query", async (ctx) => {
       );
       await client.sendMessage(
         waChatID,
-        `this chat is connected with ${chatTitle} on telegram!`
+        `Conectado com Sucesso!`
       );
       cachedData.set(tgID, waChatID);
       cachedData.set(waChatID, tgID);
@@ -171,7 +171,7 @@ bot.on("callback_query", async (ctx) => {
         await conn.close();
       }
     }
-    ctx.editMessageText("successfully connected!");
+    ctx.editMessageText("Conectado Com Sucesso!");
   }
 });
 
@@ -185,7 +185,7 @@ bot.command("disconnect", async (ctx) => {
           tgID: chatID,
         });
         if (data) {
-          ctx.reply(`Disconnected!.`);
+          ctx.reply(`Desconectado!.`);
           await coll.deleteOne({
             tgID: chatID,
           });
@@ -198,10 +198,10 @@ bot.command("disconnect", async (ctx) => {
 
           await client.sendMessage(
             data.whatsAppID,
-            "this chat is now disconnected!"
+            "Este chat agora está desconectado!"
           );
         } else {
-          ctx.reply(`no chat found to Disconnect!.`);
+          ctx.reply(`Nenhum Bate-Papo encontrado para Desconectar!.`);
         }
       } catch (error) {
         console.log(error);
@@ -216,12 +216,12 @@ bot.command("disconnect", async (ctx) => {
 
 bot.start((ctx) =>
   ctx.replyWithMarkdownV2(
-    `Hey **${ctx.message.from.first_name}**, Welcome\\!\n\nPowered by [TG\\-WhatsApp](https://github.com/subinps/TG-WhatsApp)\\.`,
+    `Hey **${ctx.message.from.first_name}**, Seja Bem-vindo\\!\n\nDistribuído por [TG\\-WhatsApp](https://github.com/subinps/TG-WhatsApp)\\.`,
     {
       disable_web_page_preview: true,
       reply_markup: {
         inline_keyboard: [
-          [{ text: "Repo", url: "https://github.com/subinps/TG-WhatsApp" }],
+          [{ text: "Repositório", url: "https://github.com/subinps/TG-WhatsApp" }],
         ],
       },
     }
@@ -229,7 +229,7 @@ bot.start((ctx) =>
 );
 
 bot.on("message", (ctx) => {
-  // Listen TG Bot messages and take action
+  // Liste as mensagens do TG Bot e tome medidas
   handleTgBot(ctx, client, MessageMedia);
 });
 
@@ -237,4 +237,4 @@ client.tgbot = bot;
 
 client.initialize();
 
-console.log("Initializing clients.. please wait...");
+console.log("Inicializando Clientes.. Por Favor Aguarde...");

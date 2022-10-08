@@ -3,9 +3,9 @@ const fs = require("fs");
 
 async function main() {
   try {
-    // keeping the cache if its a persistent servers to avoid errors
+    // Mantendo o cache se for um servidor persistente para evitar erros
     if (fs.existsSync(`${__dirname}/.wwebjs_auth`)) {
-      console.log("Session files exists");
+      console.log("Os Arquivos De Sessão Já Existem");
     } else {
       clean();
       await fetchSession();

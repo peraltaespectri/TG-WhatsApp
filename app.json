@@ -1,7 +1,7 @@
 {
   "name": "TG-WhatsApp",
   "description": "Ponte em tempo real entre WhatsApp -Telegram.",
-  "logo": "https://github.com/peraltaespectri/TG-WhatsApp/blob/730a013b192c60e7da74723fd781344e37682a0e/LOGO.PNG",
+  "logo": "https://i.ibb.co/9sSf65Y/LOGO.png",
   "repository": "https://github.com/subinps/TG-WhatsApp",
   "keywords": ["telegram", "whatsapp-bot", "whatsapp"],
   "stack": "container",

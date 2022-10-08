@@ -37,7 +37,7 @@ const isPMEnabled = async (chatID, name, msg, client) => {
   if (status == "new") {
     await client.tgbot.telegram.sendMessage(
       config.ownerID,
-      `A new Message from ${name}, Do you want to log messages from this person?`,
+      `Uma nova mensagem de ${name}, Você deseja registrar mensagens desta pessoa?`,
       {
         parse_mode: "HTML",
         disable_web_page_preview: true,
@@ -45,11 +45,11 @@ const isPMEnabled = async (chatID, name, msg, client) => {
           inline_keyboard: [
             [
               {
-                text: `Yes, Enable`,
+                text: `Sim, Ativar`,
                 callback_data: `pmEnable ${chatID}`,
               },
               {
-                text: "No, Skip",
+                text: "Não, não Ativar",
                 callback_data: `pmDisable ${chatID}`,
               },
             ],
@@ -60,7 +60,7 @@ const isPMEnabled = async (chatID, name, msg, client) => {
   }
   if (config.pmReply.toString() == "true") {
     await msg.reply(
-      "this is an automated message! \nYou should'nt expect a reply here since iam made to work only on groups!"
+      "Está é uma mensagem automática! \nVocê não deve esperar uma resposta aqui, já que eu fiz para trabalhar apenas em grupos!"
     );
   }
 
